@@ -51,8 +51,41 @@ function Tag(props) {
   );
 }
 
+// function Tag(props) {
+//   const { label, additionalValue, ...other } = props;
+
+//   const [inputValue, setInputValue] = useState(additionalValue);
+//   const [isEditing, setIsEditing] = useState(false);
+
+//   const handleInputBlur = () => {
+//     setIsEditing(false);
+//     // onInputSave(inputValue);
+//   };
+
+//   return (
+//     <div {...other} className="flex items-center">
+//       <span>{label}</span>
+//       {isEditing ? (
+//         <input
+//           type="text"
+//           value={inputValue}
+//           onChange={(e) => setInputValue(e.target.value)}
+//           onBlur={handleInputBlur}
+//           autoFocus
+//         />
+//       ) : (
+//         <span onClick={() => setIsEditing(true)} className="px-1">
+//           <span className={additionalValue && "px-1"}>{additionalValue && "|"}</span>
+//           {additionalValue || "[x]"}
+//         </span>
+//       )}
+//     </div>
+//   );
+// }
+
 Tag.propTypes = {
   label: PropTypes.string.isRequired,
+  // additionalValue: PropTypes.string,
 };
 
 const StyledTag = styled(Tag)(
