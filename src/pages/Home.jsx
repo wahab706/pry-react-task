@@ -1,10 +1,10 @@
 import React from "react";
-import { SpeechToText } from "./index";
+import { TelegramBot } from "./index";
 
 export function Home() {
   return (
     <div>
-      <SpeechToText />
+      <TelegramBot />
     </div>
   );
 }
